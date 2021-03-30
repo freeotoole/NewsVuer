@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <NewsColumn :options="TopNews" />
+    <NewsColumn :options="FakeNews" />
   </div>
 </template>
 
@@ -16,26 +17,41 @@ export default {
   data: () => ({
     TopNews: {
       title: 'Top News',
-      endpoint: 'top-headlines',
-      sources: 'new-scientist,national-geographic', // ,google-news-au
+      endpoint: 'everything',
+      sources: 'new-scientist,national-geographic,google-news-au', //
       pageSize: 9,
-      layout: [
+      columns: [
         {
-          col: 'lead',
           count: 2,
           classes: 'col-span-2',
-          lede: true,
+          layout: ['lede', 'horizontal lede'],
         },
         {
-          col: 'secondary',
           count: 2,
-          classes: 'order-first',
-          lede: true,
+          classes: 'lg:order-first',
+          layout: 'lede',
         },
         {
-          col: 'tertiary',
           count: 5,
-          horizontal: true,
+          layout: 'horizontal',
+        },
+      ],
+    },
+    FakeNews: {
+      title: 'Fake News (Fox)',
+      endpoint: 'everything',
+      sources: 'fox-news', // ,google-news-au
+      pageSize: 9,
+      columns: [
+        {
+          count: 1,
+          classes: 'col-span-2',
+          layout: ['lede', 'horizontal lede'],
+        },
+        {
+          count: 3,
+          classes: 'col-span-2',
+          layout: 'horizontal lede',
         },
       ],
     },

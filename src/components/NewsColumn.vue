@@ -3,7 +3,7 @@
     <h2 class="text-xl font-serif uppercase py-2">
       {{ options.title }}
     </h2>
-    <div class="grid grid-cols-4 gap-8">
+    <div class="sm:grid grid-cols-2 lg:grid-cols-4 gap-8">
       <div
         v-for="(column, i) in articles"
         :key="i"
@@ -13,8 +13,7 @@
           v-for="(article, j) in column.data"
           :key="j"
           :article="article"
-          :lede="column.lede"
-          :horizontal="column.horizontal"
+
           class="mb-3"
         />
       </div>
@@ -51,17 +50,22 @@ export default {
       await axios
         .get(`https://newsapi.org/v2/${opts.endpoint}?sources=${opts.sources}&pageSize=${opts.pageSize}&sortBy=publishedAt&${process.env.VUE_APP_NEWS_API_KEY}`)
         .then((response) => {
-          console.log(response.data);
           let count = 0;
-          opts.layout.forEach((col, i) => {
+          opts.columns.forEach((col, i) => {
             this.articles.push({
-              name: col.col,
               classes: col.classes,
               data: response.data.articles.slice(count, count + col.count),
             });
-            // check options for lede and pass to column
-            this.articles[i].lede = col.lede;
-            this.articles[i].horizontal = col.horizontal;
+            // check options for layout and pass to column
+            this.articles[i].data.forEach((bbb, j) => {
+              if (Array.isArray(col.layout)) {
+                this.articles[i].data[j].layout = col.layout[j];
+                console.log('has array');
+              } else {
+                this.articles[i].data[j].layout = col.layout;
+                console.log('no array');
+              }
+            });
             count += col.count;
           });
         });

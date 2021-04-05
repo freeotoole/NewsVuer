@@ -5,11 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    inputTest: 'Test string',
     spreads: [
       {
+        id: '1617319926',
         title: 'Top News',
-        endpoint: 'everything',
-        sources: 'new-scientist,national-geographic,google-news-au', //
+        endpoint: 'top-headlines',
+        sources: 'abc-news-au, australian-financial-review',
+        // category: 'business',
+        // country: 'au',
         pageSize: 9,
         columns: [
           {
@@ -29,10 +33,11 @@ export default new Vuex.Store({
         ],
       },
       {
-        title: 'Fake News (Fox)',
+        id: '1617319857',
+        title: 'Science & Environment',
         endpoint: 'everything',
-        sources: 'fox-news', // ,google-news-au
-        pageSize: 9,
+        sources: 'new-scientist,national-geographic', // ,google-news-au
+        pageSize: 4,
         columns: [
           {
             count: 1,
@@ -46,11 +51,34 @@ export default new Vuex.Store({
           },
         ],
       },
+      {
+        id: '1617568969',
+        title: 'Entertainment',
+        endpoint: 'top-headlines',
+        category: 'entertainment',
+        country: 'au',
+        pageSize: 4,
+        columns: [
+          {
+            count: 3,
+            classes: 'col-span-2',
+            layout: 'horizontal lede',
+          },
+          {
+            count: 1,
+            classes: 'col-span-2',
+            layout: ['lede', 'horizontal lede'],
+          },
+        ],
+      },
     ],
   },
   mutations: {
+    // updateSpread
+
   },
   actions: {
+    // do the local storage things here
   },
   modules: {
   },

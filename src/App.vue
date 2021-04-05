@@ -1,12 +1,17 @@
 <template>
   <div id="app">
-    <header class="bg-gray-700 py-4">
-      <div class="nav container mx-auto text-white">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/settings">Settings</router-link>
-      </div>
-
-    </header>
-    <router-view class="container mx-auto" />
+    <masthead/>
+    <router-view class="" />
+    <colophon />
   </div>
 </template>
+
+<script>
+import Colophon from './components/Colophon.vue';
+import Masthead from './components/Masthead.vue';
+
+export default {
+  components: { Masthead, Colophon },
+  name: 'App',
+};
+</script>

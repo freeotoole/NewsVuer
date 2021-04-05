@@ -15,14 +15,11 @@
       /></a>
 
       <div :class="article.layout.includes('horizontal') ? 'col-span-2' : ''">
-        <h3
-          :class="[
-            'text-xl',
-            'font-serif font-bold',
-          ]"
+        <h3 class="text-xl font-serif font-bold tracking-wide"
         >
           <a
             :href="article.url"
+            class=" hover:underline"
             :title="`Article from ${article.source.name} posted at ${article.publishedAt}`"
             >{{ article.title }}</a
           >
@@ -32,7 +29,7 @@
         </p>
       </div>
     </div>
-    <small class="text-bold uppercase text-gray-500">
+    <small class=" uppercase text-gray-500 font-sans">
       {{ article.source.name }} | {{ article.publishedAt | date }}
     </small>
   </article>

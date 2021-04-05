@@ -1,7 +1,14 @@
 module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    fontFamily: {
+      sans: ['ui-sans-serif', 'system-ui'],
+      serif: ['Libre Baskerville', 'Georgia', 'serif'],
+      body: ['Libre Baskerville', 'Georgia', 'serif'],
+
+    },
+    extend: {
+    },
   },
   variants: {
     extend: {},

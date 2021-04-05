@@ -1,8 +1,6 @@
 <template>
-  <section :class="options.title | kebabCase">
-    <h2 class="text-xl font-serif uppercase py-2">
-      {{ options.title }}
-    </h2>
+<div class="container mx-auto px-4 md:px-6">
+    <!-- List articles -->
     <div class="sm:grid grid-cols-2 lg:grid-cols-4 gap-8">
       <div
         v-for="(column, i) in articles"
@@ -13,15 +11,17 @@
           v-for="(article, j) in column.data"
           :key="j"
           :article="article"
-
-          class="mb-3"
+          class="mb-3 pb-2"
         />
+
       </div>
     </div>
-  </section>
+    <!-- end  -->
+</div>
 </template>
 <script>
 import axios from 'axios';
+
 import NewsArticle from './NewsArticle.vue';
 
 export default {
@@ -39,16 +39,25 @@ export default {
   data: () => ({
     articles: [],
   }),
-  computed: {
 
-  },
   async created() {
     this.getNewsArticles(this.options);
   },
   methods: {
     async getNewsArticles(opts) {
+      const options = () => {
+        let param = `${opts.endpoint}?`;
+        // `&pageSize=${opts.pageSize}&sortBy=publishedAt`
+        if (opts.sources) param += `sources=${opts.sources}&`;
+        if (opts.category) param += `category=${opts.category}&`;
+        if (opts.country) param += `country=${opts.country}&`;
+
+        if (opts.pageSize) param += `pageSize=${opts.pageSize}&`;
+        param += `${process.env.VUE_APP_NEWS_API_KEY}`;
+        return param;
+      };
       await axios
-        .get(`https://newsapi.org/v2/${opts.endpoint}?sources=${opts.sources}&pageSize=${opts.pageSize}&sortBy=publishedAt&${process.env.VUE_APP_NEWS_API_KEY}`)
+        .get(`https://newsapi.org/v2/${options()}`)
         .then((response) => {
           let count = 0;
           opts.columns.forEach((col, i) => {
@@ -60,10 +69,10 @@ export default {
             this.articles[i].data.forEach((bbb, j) => {
               if (Array.isArray(col.layout)) {
                 this.articles[i].data[j].layout = col.layout[j];
-                console.log('has array');
+                // console.log('has array');
               } else {
                 this.articles[i].data[j].layout = col.layout;
-                console.log('no array');
+                // console.log('no array');
               }
             });
             count += col.count;
